@@ -1,0 +1,50 @@
+Instalar composer y mongodb en ubuntu (https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#std-label-install-mdb-community-ubuntu)
+    sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y composer gnupg curl
+    curl -fsSL https://pgp.mongodb.com/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg  --dearmor
+    sudo touch /etc/apt/sources.list.d/mongodb-org-7.0.list
+    echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+    sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y mongodb-org
+
+
+La instalacion en Mint puede hacerse con bionic en lugar de jimmy (pero me dio errores)
+
+
+Comprobaciones y uso:
+     sudo systemctl start mongod
+     sudo systemctl daemon-reload     // sólo si dio error
+
+     mongosh         // para entrar en su consola
+
+
+Conectarse a MongoDB por la consola con: "mongo" y ejecutar...
+     use nomb-bd     // para usar bdd existemte o crearla
+     db              // confirma creacion
+     show dbs        // muestra d.b. creadas
+
+
+Otros comandos interesantes (si se activo la autenticacion, ver bibliografía):
+     db.dropUser(username, writeConcern)
+     db.createUser(user, writeConcern)
+
+
+Conectar PHP y mongodb (https://ualmtorres.github.io/howtos/MongoDBPHP/):
+     sudo apt-get install -y php-pear php-dev
+     sudo /opt/lampp/bin/pecl install mongodb
+     Añadir "extension=mongodb.so" al archivo "/opt/lampp/etc/php.ini" y reiniciar servicio "sudo /opt/lampp/lampp restartapache"
+    
+
+Ir a la carpeta donde estará el proyecto e instalar el driver de mongodb con:
+     composer require mongodb/mongodb --ignore-platform-reqs
+
+
+Añadir los archivos PHP de uso y listo.
+
+
+Otra bibliografía interesante:
+    https://www.php.net/manual/en/mongodb.tutorial.library.php
+    https://codearmy.co/como-crear-autenticaci%C3%B3n-y-permitir-acceso-remoto-a-mongodb-1b0231a6df44
+    https://platzi.com/tutoriales/1533-mongodb/4989-creando-usuarios-y-asignar-roles-en-mongodb/
+
+
+
+
